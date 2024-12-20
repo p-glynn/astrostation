@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Backgrounds } from "@Components/Backgrounds/utils";
 import { Astrostation } from "@Root/src/pages/Astrostation";
 import { InfoSection } from "@Root/src/pages/InfoSection";
@@ -9,7 +9,6 @@ import { version } from "@Root/package.json";
 import { Walkthrough } from "@Components/Walkthrough/Walkthrough";
 import useSetDefault from "@App/utils/hooks/useSetDefault";
 import clsx from "clsx";
-import { useRef } from "react";
 
 /**
  * This is a background image that is supported
@@ -73,10 +72,7 @@ function App() {
         <Toaster />
         <SideNav />
         <Astrostation ref={astroStationRef} />
-        <InfoSection
-          onButtonClick={handleButtonClick}
-          isSeoVisible={isSeoVisible}
-        />
+        <InfoSection onButtonClick={handleButtonClick} isSeoVisible={isSeoVisible} />
       </div>
     </>
   );
