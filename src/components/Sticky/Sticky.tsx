@@ -47,16 +47,11 @@ export const Sticky = ({ id, text, color }) => {
         <TextareaAutosize
           rows={4}
           cols={18}
+          className="border-none outline-none resize-none background-transparent"
           placeholder="Add a note"
           value={text}
           onChange={e => {
             editNote(id, "text", e.target.value);
-          }}
-          style={{
-            border: "none",
-            backgroundColor: "transparent",
-            outline: "none",
-            resize: "none",
           }}
         />
       </div>
