@@ -25,6 +25,7 @@ export const ToggleOption = ({
           </button>
           <input
             className="w-9/12 text-center dark:bg-gray-700"
+            type="number"
             defaultValue={propertyLength}
             onChange={onChange}
             readOnly={hasStarted}
