@@ -1,6 +1,6 @@
 import "./Draggable.scss";
 import { useState, useEffect, useRef } from "react";
-import Draggable from "react-draggable";
+import { Rnd } from "react-rnd";
 import { useStickyNote, useLockWidgetsStore } from "@Store";
 import clsx from "clsx";
 
@@ -24,7 +24,7 @@ export const DWrapper = ({
   setPosition: any;
   isSticky: boolean;
   stickyID?: number;
-  gridValues?: number[];
+  gridValues?: [number, number];
   handle?: string;
 }) => {
   const { setStickyNotesPos } = useStickyNote();
@@ -38,7 +38,7 @@ export const DWrapper = ({
     } else {
       setPosition(data.x, data.y);
     }
-  }
+  };
 
   const getFocus = () => {
     setZIndex(++GLOBAL_Z);
@@ -70,38 +70,66 @@ export const DWrapper = ({
 
   return (
     <>
-      <Draggable
+      <Rnd
+        bounds="parent"
+        default={{
+          x: defaultX,
+          y: defaultY,
+          width: "auto",
+          height: "auto",
+        }}
+        onDragStop={(_, data) => changePosition(data)}
+        onMouseDown={getFocus}
+        disableDragging={areWidgetsLocked}
+        // enableResizing={{
+        //   top: true,
+        //   right: true,
+        //   bottom: false,
+        //   left: false,
+        //   topRight: false,
+        //   bottomRight: true,
+        //   bottomLeft: false,
+        //   topLeft: false,
+        // }}
+        // resizeHandleStyles={{
+        //   top: { display: "none" },
+        //   right: { display: "none" },
+        //   bottom: { display: "none" },
+        //   left: { display: "none" },
+        //   topRight: { display: "none" },
+        //   bottomRight: { display: "block" },
+        //   bottomLeft: { display: "none" },
+        //   topLeft: { display: "none" },
+        // }}
+        className={clsx("inline-block", toggleHook ? "visible" : "pointer-events-none hidden")}
+      >
+        {/* isSticky? */}
+        <div style={{ zIndex: z, position: "absolute" }} onMouseDown={getFocus}>
+          <div ref={ref} className={clsx("inline-block", toggleHook ? "visible" : "pointer-events-none hidden")}>
+            {children}
+          </div>
+        </div>
+      </Rnd>
+      {/* <Draggable
         bounds="parent"
         cancel=".cancelDrag"
         position={{ x: defaultX, y: defaultY }}
-        onMouseDown={() => getFocus()}
+        onMouseDown={getFocus}
         onStop={(_, data) => changePosition(data)}
-        //@ts-ignore
         grid={gridValues}
         disabled={areWidgetsLocked}
         handle={handle}
       >
-        {isSticky ? (
-          <div 
-            style={{ zIndex: z, position: "absolute" }} 
-            onMouseDown={() => getFocus()
-          }>
-            <div ref={ref} className={clsx("inline-block", toggleHook ? "visible" : "pointer-events-none hidden")}>
-              {children}
-            </div>
+        <div
+          style={{ zIndex: z, position: "absolute" }}
+          onMouseDown={getFocus}
+          className={!isSticky && "dcard box dwidth"}
+        >
+          <div ref={ref} className={clsx("inline-block", toggleHook ? "visible" : "pointer-events-none hidden")}>
+            {children}
           </div>
-        ) : (
-          <div 
-            style={{ zIndex: z, position: "absolute" }} 
-            className="dcard box dwidth" 
-            onMouseDown={() => getFocus()
-          }>
-            <div ref={ref} className={clsx("inline-block", toggleHook ? "visible" : "pointer-events-none hidden")}>
-              {children}
-            </div>
-          </div>
-        )}
-      </Draggable>
+        </div>
+      </Draggable> */}
     </>
   );
 };
