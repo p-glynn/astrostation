@@ -228,9 +228,7 @@ export const Timer = () => {
           <div>
             <p id="tabular-nums">{sessionType}</p>
             <div className="text-7xl font-bold tabular-nums sm:text-9xl">
-              {/*// @ts-ignore */}
-              {formatDisplayTime(timerMinutes)}:{/*// @ts-ignore */}
-              {formatDisplayTime(timerSeconds)}
+              {`${formatDisplayTime(timerMinutes)}:${formatDisplayTime(timerSeconds)}`}
             </div>
           </div>
 
