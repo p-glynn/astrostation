@@ -4,8 +4,8 @@ export function secondsToTime(seconds: number) {
 }
 
 // zero paddings if < 10
-export function formatDisplayTime(time: number) {
-  if (time < 10) {
+export function formatDisplayTime(time: number | string) {
+  if (Number(time) < 10) {
     return `0${time}`;
   } else {
     return time;
