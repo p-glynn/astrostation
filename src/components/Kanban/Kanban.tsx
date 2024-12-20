@@ -17,12 +17,12 @@ const KanbanCard = ({ provided, taskIndex, task, deleteTask, updateTaskName }) =
   const enableTaskEdit = () => {
     setCardInputValue(task.name);
     setCardEditMode(true);
-  }
+  };
 
   const onFormSubmit = (event: FormEvent) => {
     event.preventDefault();
     setTaskName();
-  }
+  };
 
   const setTaskName = () => {
     setCardEditMode(false);
@@ -33,17 +33,17 @@ const KanbanCard = ({ provided, taskIndex, task, deleteTask, updateTaskName }) =
     }
 
     updateTaskName(taskIndex, cardInputValue);
-  }
+  };
 
   const delTask = (taskIndex: number) => {
     if (cardEditMode) {
       setCardEditMode(false);
       setCardInputValue(task.name);
-      return
-    };
+      return;
+    }
 
     deleteTask(taskIndex);
-  }
+  };
 
   return (
     <Draggable key={task.id} draggableId={task.id} index={taskIndex} isDragDisabled={cardEditMode}>
@@ -93,13 +93,13 @@ const KanbanCard = ({ provided, taskIndex, task, deleteTask, updateTaskName }) =
       )}
     </Draggable>
   );
-}
+};
 
 const KanbanColumn = ({ column, addTask, deleteTask, updateTaskName }) => {
   const [taskAddMode, setTaskAddMode] = useState(false);
   const [taskInputValue, setTaskInputValue] = useState("");
 
-  const addTaskButtonRef = useCallback((element) => {
+  const addTaskButtonRef = useCallback(element => {
     element?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
   }, []);
 
@@ -114,7 +114,7 @@ const KanbanColumn = ({ column, addTask, deleteTask, updateTaskName }) => {
 
     addTask(taskInputValue);
     setTaskInputValue("");
-  }
+  };
 
   return (
     <Droppable key={column.id} droppableId={column.id}>
@@ -128,6 +128,7 @@ const KanbanColumn = ({ column, addTask, deleteTask, updateTaskName }) => {
                   <div className="flex flex-col gap-2">
                     {column.tasks.map((task, index) => (
                       <KanbanCard
+                        key={index}
                         task={task}
                         taskIndex={index}
                         provided={provided}
@@ -201,8 +202,7 @@ export const Kanban = ({}) => {
   const deleteTask = (columnIndex: number, taskIndex: number) => {
     let columns = board.columns;
 
-    if (!confirm(`Are you sure you want to delete the task "${columns[columnIndex].tasks[taskIndex].name}"?`))
-      return;
+    if (!confirm(`Are you sure you want to delete the task "${columns[columnIndex].tasks[taskIndex].name}"?`)) return;
 
     columns[columnIndex].tasks.splice(taskIndex, 1);
     setColumns(columns);
@@ -212,7 +212,7 @@ export const Kanban = ({}) => {
     let columns = board.columns;
     columns[columnIndex].tasks[taskIndex].name = name;
     setColumns(columns);
-  }
+  };
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
